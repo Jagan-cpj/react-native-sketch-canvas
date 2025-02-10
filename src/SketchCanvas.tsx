@@ -89,7 +89,7 @@ class SketchCanvas extends React.Component<SketchCanvasProps, CanvasState> {
       onMoveShouldSetPanResponderCapture: (_evt: any, _gestureState: any) => true,
 
       onPanResponderGrant: (evt: { nativeEvent: any; }, gestureState: { x0: number; y0: number; }) => {
-        if (!props.touchEnabled) {
+        if (!this.props.touchEnabled) {
           return;
         }
         this._gestureState = "grant";
@@ -99,8 +99,8 @@ class SketchCanvas extends React.Component<SketchCanvasProps, CanvasState> {
           id: this._pathIds.length > 0 ? 
                 parseInt(this._pathIds[0] ,10) :
                 parseInt(String(Math.random() * 100000000), 10),
-          color: props.strokeColor,
-          width: props.strokeWidth,
+          color: this.props.strokeColor,
+          width: this.props.strokeWidth,
           data: [],
         };
 
@@ -138,10 +138,10 @@ class SketchCanvas extends React.Component<SketchCanvasProps, CanvasState> {
         const x = parseFloat((gestureState.x0 - this._offset.x).toFixed(2)),
           y = parseFloat((gestureState.y0 - this._offset.y).toFixed(2));
         this._path.data.push(`${x},${y}`);
-        props.onStrokeStart?.(x, y);
+        this.props.onStrokeStart?.(x, y);
       },
       onPanResponderMove: (_evt: any, gestureState: { moveX: number; moveY: number; }) => {
-        if (!props.touchEnabled) {
+        if (!this.props.touchEnabled) {
           return;
         }
         this._gestureState = "move";
@@ -169,12 +169,12 @@ class SketchCanvas extends React.Component<SketchCanvasProps, CanvasState> {
             ),
             y = parseFloat((gestureState.moveY - this._offset.y).toFixed(2));
           this._path.data.push(`${x},${y}`);
-          props.onStrokeChanged?.(x, y);
+          this.props.onStrokeChanged?.(x, y);
           this.getRealTimePathData();
         }
       },
       onPanResponderRelease: (_evt: any, _gestureState: any) => {
-        if (!props.touchEnabled) {
+        if (!this.props.touchEnabled) {
           return;
         }
         if (this._path) {
@@ -189,7 +189,7 @@ class SketchCanvas extends React.Component<SketchCanvasProps, CanvasState> {
           this._paths.push({
             path: this._path,
             size: this._size,
-            drawer: props.user,
+            drawer: this.props.user,
           });
         }
         UIManager.dispatchViewManagerCommand(
@@ -232,7 +232,7 @@ class SketchCanvas extends React.Component<SketchCanvasProps, CanvasState> {
   undo() {
     let lastId = -1;
     this._paths.forEach(
-      (d: any) => (lastId = d.drawer === props?.user ? d.path.id : lastId),
+      (d: any) => (lastId = d.drawer === this.props?.user ? d.path.id : lastId),
     );
     if (lastId >= 0) {
       this.deletePath(lastId);
