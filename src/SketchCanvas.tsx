@@ -184,7 +184,7 @@ class SketchCanvas extends React.Component<SketchCanvasProps, CanvasState> {
               size: this._size,
               drawer: this.props.user,
             }, 
-            _gestureState
+            this._gestureState
           )
           this._paths.push({
             path: this._path,
