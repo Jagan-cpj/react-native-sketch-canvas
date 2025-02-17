@@ -97,7 +97,7 @@ class SketchCanvas extends React.Component<SketchCanvasProps, CanvasState> {
         this._offset = {x: e.pageX - e.locationX, y: e.pageY - e.locationY};
         this._path = {
           id: this._pathIds.length > 0 ? 
-                parseInt(this._pathIds[0] ,10) :
+                Number(this._pathIds[0]) :
                 parseInt(String(Math.random() * 100000000), 10),
           color: this.props.strokeColor,
           width: this.props.strokeWidth,
@@ -105,7 +105,9 @@ class SketchCanvas extends React.Component<SketchCanvasProps, CanvasState> {
         };
 
         this._pathIds.splice(0, 1);
-        this.props.onPathIdAssigned(true);
+        if (this.props.onPathIdAssigned) {
+          this.props.onPathIdAssigned(true);
+        }
 
         UIManager.dispatchViewManagerCommand(
           this._handle,
@@ -177,7 +179,7 @@ class SketchCanvas extends React.Component<SketchCanvasProps, CanvasState> {
         if (!this.props.touchEnabled) {
           return;
         }
-        if (this._path) {
+        if (this._path && this.props.onStrokeEnd) {
           this.props.onStrokeEnd(
             {
               path: this._path,
@@ -344,7 +346,7 @@ class SketchCanvas extends React.Component<SketchCanvasProps, CanvasState> {
   }
 
   getRealTimePathData() {
-    if (this._path) {
+    if (this._path && this.props.onStrokeChangedData ) {
       this.props.onStrokeChangedData(
          {
           path: this._path,

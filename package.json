@@ -70,7 +70,7 @@
     "react": "18.2.0",
     "react-native": "0.74.3",
     "react-native-builder-bob": "^0.20.0",
-    "react-native-camera": "https://github.com/sourcetoad/react-native-camera#ee265b22c7a3544a720478a6397d0e547430ff93",
+    "react-native-camera": "https://github.com/sourcetoad/react-native-camera#6ffe8b8b2b43aafc950e96bb9fab859b3eea8a7f",
     "react-test-renderer": "18.1.0",
     "typescript": "^5.0.2"
   },
